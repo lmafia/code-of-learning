@@ -49,9 +49,9 @@ void max_heap_insert(max_heap heap, elem_t item)
     }
     i = heap->size;/*找到尾端的叶子结点的标号，右子树的最右叶子*/
     heap->size++;/*要做插入操作，当前size就++*/
-    while( heap->elem_arry[i/2] < item ) /*要插入的值不断和最右边子树的父结点做作#比较#遍历，为了给新值找位置嘛（从下往上）*/
+    while( heap->elem_arry[i/2] < item ) /*要插入的值不断和堆的子树的父结点做作#比较#遍历，为了给新值找位置嘛（从下往上）*/
     {
-        heap->elem_arry[i] = heap->elem_arry[i/2]
+        heap->elem_arry[i] = heap->elem_arry[i/2]/*而且父结点还被比下去了，往下降一等*/
         i /= 2;
     }
     heap->elem_arry[i] = item;/*找着了就赋值呗*/
