@@ -20,3 +20,10 @@ void insert_sort(int *arry, int n)
         arry[i] = temp;/*手牌比新牌小了，或者新牌是最小的，插入进去*/
     }
 }
+
+int main()
+{
+    insert_sort(arry, LEN);
+    for(int i = 0; i < LEN; i++)
+        printf("%d --- %d\n",i,arry[i]);
+}
