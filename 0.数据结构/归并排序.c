@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
-#define LEN 17
-int arry[17] = {7,1,5,7,0,2,4,8,3,12,14,1,5,6,22,9,15};
+#define LEN 14
+int arry[14] = {1,5,7,0,2,4,8,8,3,12,14,1,5,6};
 
 /*递归的归并排序*/
 void merge(int *arry, int *temp_arry,
@@ -80,9 +80,11 @@ void merge_pass(int *arry, int *temp_arry, int size, int length)
     int i,j;
     for(i = 0; i <= size-length*2; i += length*2)
         merge_noncpy(arry, temp_arry, i, i+length, i+length*2-1);
-
+    if(i+length < size-1)
         merge_noncpy(arry, temp_arry, i, i+length, size-1);
-
+    else
+        for(j = i; j <= size-1; j++)
+            temp_arry[j] = arry[j];
 }
 void iteration_merge_sort(int *arry, int size)
 {
