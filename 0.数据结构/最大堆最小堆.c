@@ -96,6 +96,7 @@ elem_t delete_max(max_heap heap)
 * 输入一个完全二叉树，变成最大堆
 * 有2个函数，数组的元素迭代安放，变成一个最大堆
 **/
+/*向下过滤函数*/
 void pre_down(max_heap heap, int p)
 {
     int parent, child;

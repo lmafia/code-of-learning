@@ -44,11 +44,11 @@ int strlen(char *string)
     return i;
 }
 
-void build_match(char *pattern, int *match)
+void build_match(const char *pattern, int *match)
 {
     int i, j;
     int m = strlen(pattern);
-    match[0] = 0;
+    match[0] = -1;
     for(j = 1; j < m; j++)
     {
         i = match[j-1];
@@ -57,7 +57,7 @@ void build_match(char *pattern, int *match)
         if(pattern[i+1] == pattern[j])
             match[j] = i+1;
         else
-            match[j] = 0;
+            match[j] = -1;
     }
 }
 char *KMP(char *string, char *pattern)
@@ -69,6 +69,8 @@ char *KMP(char *string, char *pattern)
         return NULL;
     match = (int *)malloc(sizeof(int) * m);
     build_match(pattern, match);
+    for(int i = 0; i<m; i++)
+        printf("%d",match[i]);
     s = p = 0;
     while(s<n && p<m)
     {
@@ -77,7 +79,7 @@ char *KMP(char *string, char *pattern)
             s++; p++;
         }
         else if(p > 0)
-            p = match[p-1];
+            p = match[p-1]+1;
         else
             s++;
     }
@@ -86,5 +88,6 @@ char *KMP(char *string, char *pattern)
 }
 int main()
 {
-    printf("%s\n",KMP("ababcdabcd12abcd123","abcd1"));
+    printf("\n%s\n","ababaaababaa");
+    printf("\n%s\n",KMP("ababaaababaaababaaababaa","ababaaababaa"));
 }
