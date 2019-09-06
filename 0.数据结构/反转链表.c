@@ -44,7 +44,7 @@ ListNode *reverse_list2(ListNode *pHead)
 	return re_pHead;
 }
 
-ListNode *reverse_list3(ListNode *pHead)
+ListNode *reverse_list3(ListNode *pHead) /*递归法*/
 {
 	if(pHead == NULL || pHead->next == NULL)
 		return pHead;
