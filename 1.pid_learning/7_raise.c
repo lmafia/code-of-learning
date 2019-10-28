@@ -1,3 +1,26 @@
+/**
+* 信号通信
+* 信号是内核已经存在的，是内核自带的玩意儿，在shell用kill -l可查看，一共64种
+* 所以 kill 9 pid号 就是发送终止信号给进程，并终止进程
+* 信号发送：
+*			kill() --- int kill(pid_t pid, int signal)
+*                 
+*			raise() --- int raise(int signl) 自己发给自己信号
+*
+*			alarm() --- unsigned int alarm( unsigned int seconds) 定时xx秒后发送闹钟信号给自己，较前2者，前2者是立即的，
+*																  而这个是延时的、
+* 
+* 信号接收：应该是内核会让进程自动接收，不过这时候需要进程一直等待or睡眠
+*			pause() 一直睡眠
+*			sleep() 定时睡眠
+*			while(1) 死循环
+* 信号处理：
+*			signal() --- void *signal(int sig, void(*handler)(int))(int) 自定义信号处理函数，默认的处理是根据不同信号会有不同的默认处理函数的
+*
+*			sigaction() --- int sigaction (int sig, const struct sigaction *act, struct sigaction *oact) 这个比signal更强大
+**/
+
+
 #include <stdio.h>
 #include <sys/types.h>
 #include <signal.h>

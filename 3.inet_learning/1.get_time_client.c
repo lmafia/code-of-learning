@@ -21,7 +21,7 @@ int main()
 	bzero(&servaddr, sizeof(struct sockaddr_in));
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-	servaddr.sin_port = htons(8888);
+	servaddr.sin_port = htons(800);
 	
 	if( connect(sockfd, (struct sockaddr *)&servaddr, sizeof(servaddr)) < 0)
 	{
