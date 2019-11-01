@@ -4,7 +4,7 @@ from lxml import etree
 
 def loadPage(url):
     context = ssl._create_unverified_context()  # 创建未经验证的上下文
-
+	#请求头列表
     ua_list = [
         'Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; WOW64; Trident/5.0; SLCC2; .NET CLR 2.0.50727; .NET CLR 3.5.30729; .NET CLR 3.0.30729; Media Center PC 6.0; InfoPath.3; .NET4.0C; .NET4.0E; SE 2.X MetaSr 1.0)',
         'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/534.3 (KHTML, like Gecko) Chrome/6.0.472.33 Safari/534.3 SE 2.X MetaSr 1.0',
@@ -14,14 +14,16 @@ def loadPage(url):
         'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
         'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.70 Safari/537.36'
     ]
-
+	#随机选取一个请求头
     user_agent = random.choice(ua_list)
     #伪装一个User-agent
     headers = {'User-Agent':user_agent}
     print(headers)
-    req = request.Request(url,headers=headers)          #构建请求对象
-    response = request.urlopen(req, context=context)
-
+	#构建请求对象
+    req = request.Request(url,headers=headers)          
+    #发送请求，得到相应对象
+	response = request.urlopen(req, context=context)
+	#不用伪装请求如下：
     # req = request.Request(url)          #构建请求对象
     # response = request.urlopen(req)     #发送请求,得到响应对象
     html = response.read()              #获取响应对象的内容
@@ -36,7 +38,7 @@ def writePage(html,filename):
 
 
 def tiebaInfo(html,filename):
-
+'''解析贴吧的html，把目标元素保存本地'''
     f = open(filename,'w',encoding='utf-8')
     html.decode('utf-8')
     content = etree.HTML(html)     #解析HTML文档
@@ -71,20 +73,20 @@ def tiebaSpider(url):
     tieba = input('请输入要爬取的贴吧：')
     beginPage = int(input('请输入起始页：'))
     endPage = int(input('请输入结束页：'))
-
+	#因为parse的方法参数是字典，要构造一个字典
     kw = {'kw':tieba}
     param = parse.urlencode(kw)
     url = url + param
     for page in range(beginPage,endPage+1):
-        pn = (page-1)*50
-        fullurl = url + '&pn=' + str(pn)
+        pn = (page-1)*50				#tieba的每一页的url规律
+        fullurl = url + '&pn=' + str(pn)#构建完整的url
         print(fullurl)
 
         html = loadPage(fullurl)
 
-        dos_html = html.decode('utf-8')         # 对unicode编码进行解码
-        filename = '%s吧第%s页.txt' % (tieba, page)
-        tiebaInfo(html, filename)
+        dos_html = html.decode('utf-8')  # 对unicode编码进行解码
+        filename = '%s吧第%s页.txt' % (tieba, page) # 构建文件名
+        tiebaInfo(html, filename) #解析html并保存本地txt
 
         # print(html)
         filename = '%s吧第%s页.html' % (tieba, page)

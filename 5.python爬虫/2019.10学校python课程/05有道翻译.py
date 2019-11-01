@@ -17,12 +17,10 @@ def loadPage(url,word):
     #从列表中随机选取一个useragent
     UserAgent = random.choice(ua_list)
     #构造请求头
-    headers ={
-        "User-Agent":UserAgent
-    }
-    #构造form_data
+    headers ={"User-Agent":UserAgent}
+    #构造form_data POST的消息体
     data ={
-        "i": "hello",
+        "i": "",
         "from": "AUTO",
         "to": "AUTO",
         "smartresult": "dict",
